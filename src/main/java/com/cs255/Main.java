@@ -38,8 +38,8 @@ import java.lang.Math.*;
 import javafx.geometry.HPos;
 
 public class Main extends Application {
-  int Width = 640;
-  int Height = 640;
+  int Width = 500;
+  int Height = 500;
 
   int green_col = 255; //just for the test example
 
@@ -96,12 +96,49 @@ public class Main extends Application {
     int w = (int) image.getWidth(), h = (int) image.getHeight(), i, j;
     PixelWriter image_writer = image.getPixelWriter();
 
-    double c = green_col / 255.0;
-    Vector col = new Vector(0.5, c, 0.5);
+    double col = 0.0;
+
+    Vector origin = new Vector(0,0,0);
+    Vector d = new Vector(0,0,1);
+    Vector centre = new Vector(0,0,0);
+    double radius = 100;
+    Vector p = new Vector(0,0,0);
+    double t;
+    double a, b, c;
+    Vector v;
+    Vector Light = new Vector(250, 250, -200);
 
     for (j = 0; j < h; j++) {
       for (i = 0; i < w; i++) {
-        image_writer.setColor(i, j, Color.color(col.x, col.y, col.z, 1.0));
+        origin.x=i-250;
+        origin.y=j-250;
+        origin.z=-200;
+        v = origin.sub(centre);
+        a = d.dot(d);
+        b = 2 * v.dot(d);
+        c = v.dot(v) - radius * radius;
+        double discriminate = b * b - 4 * a * c;
+        if (discriminate < 0) {
+          col = 0.0;
+        } else {
+          col = 1.0;
+        }
+        t = (-b - Math.sqrt(discriminate)) / (2 * a);
+        p = origin.add(d.mul(t));
+        Vector lightSource = Light.sub(p);
+        lightSource.normalise();
+        Vector n = p.sub(centre);
+        n.normalise();
+        double dp = lightSource.dot(n);
+        if (dp < 0) {
+          col = 0;
+        } else {
+          col = dp;
+        }
+        if (col > 1) {
+          col = 1;
+        }
+        image_writer.setColor(i, j, Color.color(col, col, col, 1.0));
       } // column loop
     } // row loop
   }
