@@ -44,10 +44,16 @@ public class Main extends Application {
   int red_col = 255;
   int green_col = 255; //just for the test example
   int blue_col = 255;
+  ArrayList<Sphere> spheres = new ArrayList<>();
 
 
   @Override
   public void start(Stage stage) throws FileNotFoundException {
+    spheres.add(new Sphere(new Vector(0, 0, 0), new Vector(0, 0, 1),
+            new Vector(0,0,0), 100, new Vector(250, 250, -200)));
+    spheres.add(new Sphere(new Vector(0, 0, 0), new Vector(0, 0, 1),
+            new Vector(100,100,100), 100, new Vector(250, 250, -200)));
+
     stage.setTitle("Ray Tracing");
 
     //We need 3 things to see an image
@@ -119,43 +125,14 @@ public class Main extends Application {
     int w = (int) image.getWidth(), h = (int) image.getHeight(), i, j;
     PixelWriter image_writer = image.getPixelWriter();
 
-    double col = green_col / 255.0;
+    double col;
 
-    Vector origin = new Vector(0,0,0);
-    Vector d = new Vector(0,0,1);
-    Vector centre = new Vector(0,0,0);
-    double radius = 100;
-    Vector p = new Vector(0,0,0);
-    double t;
-    double a, b, c;
-    Vector v;
-    Vector Light = new Vector(250, 250, -200);
+
 
     for (j = 0; j < h; j++) {
       for (i = 0; i < w; i++) {
-        origin.x=i-250;
-        origin.y=j-250;
-        origin.z=-200;
-        v = origin.sub(centre);
-        a = d.dot(d);
-        b = 2 * v.dot(d);
-        c = v.dot(v) - radius * radius;
-        double discriminate = b * b - 4 * a * c;
-        t = (-b - Math.sqrt(discriminate)) / (2 * a);
-        p = origin.add(d.mul(t));
-        Vector lightSource = Light.sub(p);
-        lightSource.normalise();
-        Vector n = p.sub(centre);
-        n.normalise();
-        double dp = lightSource.dot(n);
-        if (dp < 0) {
-          col = 0;
-        } else {
-          col = dp;
-        }
-        if (col > 1) {
-          col = 1;
-        }
+        col = getCol(spheres, i ,j);
+
         double red_col2 = red_col / 255.0;
         double green_col2 = green_col / 255.0;
         double blue_col2 = blue_col / 255.0;
@@ -164,6 +141,15 @@ public class Main extends Application {
     } // row loop
   }
 
+
+  public static double getCol(ArrayList<Sphere> spheres, int i, int j) {
+    for (Sphere sphere : spheres) {
+      if(sphere.getCol(i, j) > 0.0) {
+        return(sphere.getCol(i, j));
+      }
+    }
+    return 0.0;
+  }
   public static void main(String[] args) {
     launch();
   }
