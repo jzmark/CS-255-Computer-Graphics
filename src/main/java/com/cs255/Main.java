@@ -74,9 +74,9 @@ public class Main extends Application {
         Slider b_slider = new Slider(0, 255, blue_col);
 
         int x = 0,y = 0,z = 0;
-        Slider xSlider = new Slider(0, 500, x);
-        Slider ySlider = new Slider(0, 500, y);
-        Slider zSlider = new Slider(0, 500, z);
+        Slider xSlider = new Slider(-250, 250, x);
+        Slider ySlider = new Slider(-250, 250, y);
+        Slider zSlider = new Slider(-250, 250, z);
 
 
         //Add all the event handlers
@@ -84,6 +84,12 @@ public class Main extends Application {
                 new ChangeListener<String>() {
                     public void changed(ObservableValue observable, String old, String newVal) {
                         selectedSphere = Integer.parseInt(newVal.replaceAll("[^0-9]", "")) - 1;
+                        r_slider.valueProperty().setValue(spheres.get(selectedSphere).getRedCol() * 255.0);
+                        g_slider.valueProperty().setValue(spheres.get(selectedSphere).getGreenCol() * 255.0);
+                        b_slider.valueProperty().setValue(spheres.get(selectedSphere).getBlueCol() * 255.0);
+                        xSlider.valueProperty().setValue(spheres.get(selectedSphere).getX());
+                        ySlider.valueProperty().setValue(spheres.get(selectedSphere).getY());
+                        zSlider.valueProperty().setValue(spheres.get(selectedSphere).getZ());
                     }
                 });
 
@@ -108,7 +114,30 @@ public class Main extends Application {
                     public void changed(ObservableValue<? extends Number>
                                                 observable, Number oldValue, Number newValue) {
                         spheres.get(selectedSphere).setBlueCol(newValue.intValue());
-                        //spheres.get(selectedSphere).setPos(-200, -200, -200);
+                        Render(image);
+                    }
+                });
+        xSlider.valueProperty().addListener(
+                new ChangeListener<Number>() {
+                    public void changed(ObservableValue<? extends Number>
+                                                observable, Number oldValue, Number newValue) {
+                        spheres.get(selectedSphere).setX(newValue.intValue());
+                        Render(image);
+                    }
+                });
+        ySlider.valueProperty().addListener(
+                new ChangeListener<Number>() {
+                    public void changed(ObservableValue<? extends Number>
+                                                observable, Number oldValue, Number newValue) {
+                        spheres.get(selectedSphere).setY(newValue.intValue());
+                        Render(image);
+                    }
+                });
+        zSlider.valueProperty().addListener(
+                new ChangeListener<Number>() {
+                    public void changed(ObservableValue<? extends Number>
+                                                observable, Number oldValue, Number newValue) {
+                        spheres.get(selectedSphere).setZ(newValue.intValue());
                         Render(image);
                     }
                 });
@@ -133,6 +162,9 @@ public class Main extends Application {
         root.add(r_slider, 0, 2);
         root.add(g_slider, 0, 3);
         root.add(b_slider, 0, 4);
+        root.add(xSlider, 0, 6);
+        root.add(ySlider, 0, 7);
+        root.add(zSlider, 0, 8);
 
         //Display to user
         Scene scene = new Scene(root, 1024, 768);

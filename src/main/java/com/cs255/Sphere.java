@@ -20,8 +20,28 @@ public class Sphere {
         this.light = light;
     }
 
-    public void setPos(double x, double y, double z) {
-        this.centre.set(x, y, z);
+    public double getX() {
+        return centre.getX();
+    }
+
+    public void setX(double x) {
+        centre.setX(x);
+    }
+
+    public double getY() {
+        return centre.getY();
+    }
+
+    public void setY(double y) {
+        centre.setY(y);
+    }
+
+    public double getZ() {
+        return centre.getZ();
+    }
+
+    public void setZ(double z) {
+        centre.setZ(z);
     }
 
     public void setRedCol(int redCol) {

@@ -11,10 +11,28 @@ public class Vector {
     z = k;
   }
 
-  public void set(double i, double j, double k) {
-    x = i;
-    y = j;
-    z = k;
+  public double getX() {
+    return x;
+  }
+
+  public void setX(double x) {
+    this.x = x;
+  }
+
+  public double getY() {
+    return y;
+  }
+
+  public void setY(double y) {
+    this.y = y;
+  }
+
+  public double getZ() {
+    return z;
+  }
+
+  public void setZ(double z) {
+    this.z = z;
   }
 
   public double magnitude() {
