@@ -10,6 +10,13 @@ public class Vector {
     y = j;
     z = k;
   }
+
+  public void set(double i, double j, double k) {
+    x = i;
+    y = j;
+    z = k;
+  }
+
   public double magnitude() {
     return Math.sqrt(x * x + y * y + z * z);
   }

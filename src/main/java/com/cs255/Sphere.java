@@ -1,15 +1,16 @@
 package com.cs255;
 
 public class Sphere {
-    Vector origin;
-    Vector d;
-    Vector centre;
-    double radius;
-    Vector p;
-    double t;
-    double a, b, c;
-    Vector v;
-    Vector light;
+    private Vector origin;
+    private Vector d;
+    private Vector centre;
+    private double radius;
+    private Vector p;
+    private double t;
+    private double a, b, c;
+    private Vector v;
+    private Vector light;
+    private int redCol = 255, blueCol = 255, greenCol = 255;
 
     public Sphere(Vector origin, Vector d, Vector centre, double radius, Vector light) {
         this.origin = origin;
@@ -17,6 +18,34 @@ public class Sphere {
         this.centre = centre;
         this.radius = radius;
         this.light = light;
+    }
+
+    public void setPos(double x, double y, double z) {
+        this.centre.set(x, y, z);
+    }
+
+    public void setRedCol(int redCol) {
+        this.redCol = redCol;
+    }
+
+    public void setBlueCol(int blueCol) {
+        this.blueCol = blueCol;
+    }
+
+    public void setGreenCol(int greenCol) {
+        this.greenCol = greenCol;
+    }
+
+    public double getRedCol() {
+        return redCol / 255.0;
+    }
+
+    public double getBlueCol() {
+        return blueCol / 255.0;
+    }
+
+    public double getGreenCol() {
+        return greenCol / 255.0;
     }
 
     public double getCol(int i, int j) {
