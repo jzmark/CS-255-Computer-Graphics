@@ -27,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class Main extends Application {
     int red_col = 255;
     int green_col = 255; //just for the test example
     int blue_col = 255;
+    int r = 100;
     int selectedSphere = 0;
     ArrayList<Sphere> spheres = new ArrayList<>();
 
@@ -69,14 +71,17 @@ public class Main extends Application {
         cb.setPromptText("Sphere 1");
 
         //Create the simple GUI
+        Text txt1 = new Text("r, g, b:");
         Slider r_slider = new Slider(0, 255, red_col);
         Slider g_slider = new Slider(0, 255, green_col);
         Slider b_slider = new Slider(0, 255, blue_col);
 
         int x = 0,y = 0,z = 0;
+        Text txt2 = new Text("x, y, z, radius:");
         Slider xSlider = new Slider(-250, 250, x);
         Slider ySlider = new Slider(-250, 250, y);
         Slider zSlider = new Slider(-250, 250, z);
+        Slider rSlider = new Slider(0, 250, r);
 
 
         //Add all the event handlers
@@ -90,6 +95,7 @@ public class Main extends Application {
                         xSlider.valueProperty().setValue(spheres.get(selectedSphere).getX());
                         ySlider.valueProperty().setValue(spheres.get(selectedSphere).getY());
                         zSlider.valueProperty().setValue(spheres.get(selectedSphere).getZ());
+                        rSlider.valueProperty().setValue(spheres.get(selectedSphere).getRadius());
                     }
                 });
 
@@ -141,6 +147,14 @@ public class Main extends Application {
                         Render(image);
                     }
                 });
+        rSlider.valueProperty().addListener(
+                new ChangeListener<Number>() {
+                    public void changed(ObservableValue<? extends Number>
+                                                observable, Number oldValue, Number newValue) {
+                        spheres.get(selectedSphere).setRadius(newValue.intValue());
+                        Render(image);
+                    }
+                });
 
         //The following is in case you want to interact with the image in any way
         //e.g., for user interaction, or you can find out the pixel position for debugging
@@ -159,15 +173,18 @@ public class Main extends Application {
         //we need to add it to the pane
         root.add(view, 0, 0);
         root.add(cb, 0, 1);
-        root.add(r_slider, 0, 2);
-        root.add(g_slider, 0, 3);
-        root.add(b_slider, 0, 4);
-        root.add(xSlider, 0, 6);
-        root.add(ySlider, 0, 7);
-        root.add(zSlider, 0, 8);
+        root.add(txt1, 0, 2);
+        root.add(r_slider, 0, 3);
+        root.add(g_slider, 0, 4);
+        root.add(b_slider, 0, 5);
+        root.add(txt2, 0, 6);
+        root.add(xSlider, 0, 7);
+        root.add(ySlider, 0, 8);
+        root.add(zSlider, 0, 9);
+        root.add(rSlider, 0, 10);
 
         //Display to user
-        Scene scene = new Scene(root, 1024, 768);
+        Scene scene = new Scene(root, 900, 800);
         stage.setScene(scene);
         stage.show();
     }

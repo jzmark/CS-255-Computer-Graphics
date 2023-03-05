@@ -20,6 +20,14 @@ public class Sphere {
         this.light = light;
     }
 
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
     public double getX() {
         return centre.getX();
     }
