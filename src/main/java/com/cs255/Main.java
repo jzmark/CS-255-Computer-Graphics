@@ -160,6 +160,8 @@ public class Main extends Application {
         //e.g., for user interaction, or you can find out the pixel position for debugging
         view.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_PRESSED, event -> {
             System.out.println(event.getX() + " " + event.getY());
+            System.out.println(Double.isNaN(spheres.get(0).getCol((int) event.getX(), (int) event.getY())));
+            System.out.println(spheres.get(0).getCol((int) event.getX(), (int) event.getY()));
             event.consume();
         });
 
@@ -210,13 +212,22 @@ public class Main extends Application {
     public static double[] getCol(ArrayList<Sphere> spheres, int i, int j) {
         double maxCol = 0.0;
         double[] cols = {0.0, 0.0, 0.0};
-        for (Sphere sphere : spheres) {
+        /*for (Sphere sphere : spheres) {
             double currentCol = sphere.getCol(i, j);
             if (currentCol > maxCol) {
                 maxCol = currentCol;
                 cols[0] = currentCol * sphere.getRedCol();
                 cols[1] = currentCol * sphere.getGreenCol();
                 cols[2] = currentCol * sphere.getBlueCol();
+            }
+        }*/
+        for(int index = 0; index < spheres.size(); index++) {
+            double currentCol = spheres.get(index).getCol(i, j);
+            if (maxCol == 0.0 || Double.isNaN(maxCol)) {
+                maxCol = currentCol;
+                cols[0] = currentCol * spheres.get(index).getRedCol();
+                cols[1] = currentCol * spheres.get(index).getGreenCol();
+                cols[2] = currentCol * spheres.get(index).getBlueCol();
             }
         }
         return cols;
