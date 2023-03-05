@@ -163,8 +163,6 @@ public class Main extends Application {
         //e.g., for user interaction, or you can find out the pixel position for debugging
         view.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_PRESSED, event -> {
             System.out.println(event.getX() + " " + event.getY());
-            System.out.println(Double.isNaN(spheres.get(0).getCol((int) event.getX(), (int) event.getY())));
-            System.out.println(spheres.get(0).getCol((int) event.getX(), (int) event.getY()));
             event.consume();
         });
 
