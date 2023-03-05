@@ -1,6 +1,6 @@
 package com.cs255;
 /**
- * @author Marek Jezinski 2017161, Gracjan Golebiewski 2018590
+ * @author Marek Jezinski 2017161, Gracjan Golebiewski 2018590 (worked as a Pair)
  * @version 1.1
  *
  * This is a class that enables the construction of Sphere objects

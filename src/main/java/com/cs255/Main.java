@@ -4,7 +4,7 @@ package com.cs255;
  * Spheres on a stage with multiple sliders and
  * a dropdown menu to select which Sphere to control.
  *
- * @author Marek Jezinski 2017161, Gracjan Golebiewski 2018590
+ * @author Marek Jezinski 2017161, Gracjan Golebiewski 2018590 (worked as a Pair)
  * @version 1.1
  *
  */
