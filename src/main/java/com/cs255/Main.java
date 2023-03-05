@@ -212,7 +212,10 @@ public class Main extends Application {
     public static double[] getCol(ArrayList<Sphere> spheres, int i, int j) {
         double maxCol = 0.0;
         double[] cols = {0.0, 0.0, 0.0};
-        /*for (Sphere sphere : spheres) {
+
+        //Arraylist ordering doesn't matter, the brightest pixel is written to the screen
+
+        for (Sphere sphere : spheres) {
             double currentCol = sphere.getCol(i, j);
             if (currentCol > maxCol) {
                 maxCol = currentCol;
@@ -220,8 +223,11 @@ public class Main extends Application {
                 cols[1] = currentCol * sphere.getGreenCol();
                 cols[2] = currentCol * sphere.getBlueCol();
             }
-        }*/
-        for(int index = 0; index < spheres.size(); index++) {
+        }
+
+        //Always writes spheres according to their order in arraylist
+
+        /*for(int index = 0; index < spheres.size(); index++) {
             double currentCol = spheres.get(index).getCol(i, j);
             if (maxCol == 0.0 || Double.isNaN(maxCol)) {
                 maxCol = currentCol;
@@ -229,7 +235,7 @@ public class Main extends Application {
                 cols[1] = currentCol * spheres.get(index).getGreenCol();
                 cols[2] = currentCol * spheres.get(index).getBlueCol();
             }
-        }
+        }*/
         return cols;
     }
 
