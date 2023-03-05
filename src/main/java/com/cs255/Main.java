@@ -1,16 +1,16 @@
-package com.cs255;/*
-CS-255 Getting started code for the assignment
-I do not give you permission to post this code online
-Do not post your solution online
-Do not copy code
-Do not use JavaFX functions or other libraries to do the main parts of the assignment (i.e. ray tracing steps 1-7)
-All of those functions must be written by yourself
-You may use libraries to achieve a better GUI
-*/
+package com.cs255;
+/**
+ * This is a class that allows the rendering of
+ * Spheres on a stage with multiple sliders and
+ * a dropdown menu to select which Sphere to control.
+ *
+ * @author Marek Jezinski 2017161, Gracjan Golebiewski 2018590
+ * @version 1.1
+ *
+ */
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,25 +29,34 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.io.*;
 import java.lang.Math.*;
-
 import javafx.geometry.HPos;
 
 public class Main extends Application {
+
+    //Creating and setting the variables
     int Width = 500;
     int Height = 500;
-
     int red_col = 255;
-    int green_col = 255; //just for the test example
+    int green_col = 255;
     int blue_col = 255;
     int r = 100;
     int selectedSphere = 0;
+
+    //Creating an Arraylist to store the Spheres
     ArrayList<Sphere> spheres = new ArrayList<>();
 
 
+    /**
+     * The start method that generates the stage where the
+     * Spheres will be rendered, alongside buttons and
+     * sliders. Multiple Spheres have to be added here in order
+     * to render them.
+     * @param stage
+     * @throws FileNotFoundException
+     */
     @Override
     public void start(Stage stage) throws FileNotFoundException {
         spheres.add(new Sphere(new Vector(0, 0, 0), new Vector(0, 0, 1),
@@ -55,14 +64,10 @@ public class Main extends Application {
         spheres.add(new Sphere(new Vector(0, 0, 0), new Vector(0, 0, 1),
                 new Vector(-50, -50, -50), 100, new Vector(250, 250, -200)));
 
+        //Name of the stage
         stage.setTitle("Ray Tracing");
-
-        //We need 3 things to see an image
-        //1. We create an image we can write to
         WritableImage image = new WritableImage(Width, Height);
-        //2. We create a view of that image
         ImageView view = new ImageView(image);
-        //3. Add to the pane (below)
 
         ComboBox cb = new ComboBox();
         for (int i = 0; i < spheres.size(); i++) {
@@ -70,7 +75,6 @@ public class Main extends Application {
         }
         cb.setPromptText("Sphere 1");
 
-        //Create the simple GUI
         Text txt1 = new Text("r, g, b:");
         Slider r_slider = new Slider(0, 255, red_col);
         Slider g_slider = new Slider(0, 255, green_col);
@@ -83,8 +87,6 @@ public class Main extends Application {
         Slider zSlider = new Slider(-250, 250, z);
         Slider rSlider = new Slider(0, 250, r);
 
-
-        //Add all the event handlers
         cb.valueProperty().addListener(
                 new ChangeListener<String>() {
                     public void changed(ObservableValue observable, String old, String newVal) {
@@ -99,6 +101,7 @@ public class Main extends Application {
                     }
                 });
 
+        //Sliders for change of colour in the Spheres, and their positions/size
         r_slider.valueProperty().addListener(
                 new ChangeListener<Number>() {
                     public void changed(ObservableValue<? extends Number>
@@ -171,8 +174,7 @@ public class Main extends Application {
         root.setVgap(12);
         root.setHgap(12);
 
-        //3. (referring to the 3 things we need to display an image)
-        //we need to add it to the pane
+        //Adding created view and sliders/buttons to the Pane
         root.add(view, 0, 0);
         root.add(cb, 0, 1);
         root.add(txt1, 0, 2);
@@ -191,24 +193,34 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * This method renders image using the getCol method
+     * in order to generate Spheres with chosen colour
+     * @param image
+     */
     public void Render(WritableImage image) {
-        //Get image dimensions, and declare loop variables
         int w = (int) image.getWidth(), h = (int) image.getHeight(), i, j;
         PixelWriter image_writer = image.getPixelWriter();
-
         double[] cols;
-
-
         for (j = 0; j < h; j++) {
             for (i = 0; i < w; i++) {
                 cols = getCol(spheres, i, j);
-
                 image_writer.setColor(i, j, Color.color(cols[0], cols[1], cols[2], 1.0));
-            } // column loop
-        } // row loop
+            }
+        }
     }
 
-
+    /**
+     * This method is used to allow the user to modify the
+     * colour of selected Sphere from the Arraylist.
+     * There are 2 versions available that have different
+     * effects on how the final render of Sphere
+     * is shown.
+     * @param spheres
+     * @param i
+     * @param j
+     * @return
+     */
     public static double[] getCol(ArrayList<Sphere> spheres, int i, int j) {
         double maxCol = 0.0;
         double[] cols = {0.0, 0.0, 0.0};
