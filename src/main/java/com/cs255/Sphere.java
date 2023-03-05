@@ -2,7 +2,12 @@ package com.cs255;
 /**
  * @author Marek Jezinski 2017161, Gracjan Golebiewski 2018590
  * @version 1.1
+ *
+ * This is a class that enables the construction of Sphere objects
+ * that contain colour and ambient shading. Modifications to size and
+ * position of the sphere can also be performed.
  */
+
 public class Sphere {
     //Creating the vector variables
     private Vector origin;
